@@ -20,7 +20,7 @@ RUN /usr/bin/apt-get update && apt-get -y install git build-essential curl php5-
     ./install && \
     git clone https://github.com/phalcon/phalcon-devtools.git /usr/local/lib/phalcon-devtools && \
         ln -s /usr/local/lib/phalcon-devtools/phalcon.php /usr/bin/phalcon && \
-        chmod +x /usr/bin/phalcon
+        chmod +x /usr/bin/phalcon && \
     cd /tmp && \
     /bin/rm -rf /tmp/cphalcon/ && \
     /usr/bin/apt-get -y purge git php5-dev libpcre3-dev build-essential gcc make && apt-get -y autoremove && apt-get clean && rm -rf /var/lib/apt/lists/*
