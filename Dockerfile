@@ -13,15 +13,13 @@ RUN apt-get update && apt-get install -y wget git re2c apt-utils apt-transport-h
     php7.0-common \
     php-pear \
     php7.0-curl \
-    php7.0-gd \
-    php7.0-imagick \
-    php7.0-intl \
     php7.0-mcrypt \
     php7.0-pgsql \
     php7.0-opcache \
     php7.0-mysql \
     php7.0-mongodb \
     php7.0-bz2 \
+    && apt-get install php-imagick php-gd php7.0-intl \
     && apt-get clean
 
 #Phalcon installation
