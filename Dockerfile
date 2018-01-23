@@ -34,13 +34,6 @@ RUN git clone --depth=1 http://github.com/phalcon/cphalcon.git \
     && echo 'extension=phalcon.so' > /etc/php/7.0/apache2/conf.d/50-phalcon.ini \
     && echo 'extension=phalcon.so' > /etc/php/7.0/cli/conf.d/50-phalcon.ini
 
-WORKDIR /tmp
-RUN git clone http://github.com/phalcon/phalcon-devtools.git \
-    && cd phalcon-devtools/ \
-    && ./phalcon.sh \
-    && ln -s phalcon.php /usr/local/bin/phalcon \
-    && alias phalcon="/tmp/phalcon-devtools/phalcon.php"
-
 RUN /usr/sbin/a2dismod 'mpm_*' && /usr/sbin/a2enmod mpm_prefork
 RUN /usr/sbin/a2enmod rewrite
 ADD 000-phalcon.conf /etc/apache2/sites-available/
