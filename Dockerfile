@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -y wget git re2c apt-utils apt-transport-h
     php7.0-mysql \
     php7.0-mongodb \
     php7.0-bz2 \
+    && add-apt-repository ppa:ondrej/php \
+    && apt-get update \
     && apt-get install php-imagick php-gd php7.0-intl \
     && apt-get clean
 
