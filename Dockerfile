@@ -1,9 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER vannk <vansunny12@gmail.com>
 
-RUN apt-get update && apt-get -y install php5 && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /tmp
 # The Dotdeb repository for Php 7
 RUN apt-get update && apt-get install -y wget git re2c apt-utils apt-transport-https \
     &&  echo 'deb http://packages.dotdeb.org jessie all' > /etc/apt/sources.list.d/dotdeb.list \
@@ -26,9 +23,9 @@ RUN apt-get update && apt-get install -y wget git re2c apt-utils apt-transport-h
     php7.0-mongodb \
     php7.0-bz2 \
     && apt-get clean
+
 #Phalcon installation
-RUN mkdir /home/phalcon
-WORKDIR /home/phalcon
+WORKDIR /tmp
 RUN git clone --depth=1 http://github.com/phalcon/cphalcon.git \
     && cd cphalcon/build \
     && ./install \
