@@ -1,29 +1,30 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER vannk <vansunny12@gmail.com>
 
-# The Dotdeb repository for Php 7
-RUN apt-get update && apt-get install -y software-properties-common python-software-properties \
-	wget git re2c apt-utils apt-transport-https \
-    &&  echo 'deb http://packages.dotdeb.org jessie all' > /etc/apt/sources.list.d/dotdeb.list \
-    && wget https://www.dotdeb.org/dotdeb.gpg && apt-key add dotdeb.gpg  && rm dotdeb.gpg\
-    && apt-get update \
-    && apt-get -y install apache2 \
+# Install apache, php, etc...
+RUN apt-get update && \
+    apt-get install -y \
+    git \
+    libpcre3-dev \
+    gcc \
+    make \
+    re2c \
+    apache2 \
     php7.0 \
-    php7.0-dev \
-    libapache2-mod-php7.0 \
-    php7.0-common \
-    php-pear \
     php7.0-curl \
-    php7.0-mcrypt \
-    php7.0-pgsql \
-    php7.0-opcache \
+    php7.0-gd \
+    php7.0-json \
     php7.0-mysql \
-    php7.0-mongodb \
-    php7.0-bz2 \
-    && add-apt-repository ppa:ondrej/php \
-    && apt-get update \
-    && apt-get install php-imagick php-gd php7.0-intl \
-    && apt-get clean
+    php7.0-intl \
+    php7.0-mbstring \
+    php7.0-mcrypt \
+    libapache2-mod-php7.0 \
+    php-imagick \
+    php7.0-dev \
+    libpcre3-dev \
+    gcc \
+    make
+
 
 #Phalcon installation
 WORKDIR /tmp
@@ -33,10 +34,12 @@ RUN git clone --depth=1 http://github.com/phalcon/cphalcon.git \
     && echo 'extension=phalcon.so' > /etc/php/7.0/mods-available/phalcon.ini \
     && echo 'extension=phalcon.so' > /etc/php/7.0/apache2/conf.d/50-phalcon.ini \
     && echo 'extension=phalcon.so' > /etc/php/7.0/cli/conf.d/50-phalcon.ini
+
+WORKDIR /tmp
 RUN git clone http://github.com/phalcon/phalcon-devtools.git \
     && cd phalcon-devtools/ \
-    && . /home/phalcon/phalcon-devtools/phalcon.sh \
-    && ln -s /home/phalcon/phalcon-devtools/phalcon.php /usr/local/bin/phalcon \
+    && ./phalcon.sh \
+    && ln -s phalcon.php /usr/local/bin/phalcon \
     && chmod +x /usr/local/bin/phalcon
 
 RUN /usr/sbin/a2dismod 'mpm_*' && /usr/sbin/a2enmod mpm_prefork
