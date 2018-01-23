@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM debian:jessie
 MAINTAINER vannk <vansunny12@gmail.com>
 
 # The Dotdeb repository for Php 7
