@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:14.04
 MAINTAINER vannk <vansunny12@gmail.com>
 
 # The Dotdeb repository for Php 7
