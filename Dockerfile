@@ -39,7 +39,8 @@ RUN git clone http://github.com/phalcon/phalcon-devtools.git \
     && cd phalcon-devtools/ \
     && ./phalcon.sh \
     && ln -s phalcon.php /usr/local/bin/phalcon \
-    && alias phalcon="/tmp/phalcon-devtools/phalcon.php"
+    && ln -s /tmp/phalcon-devtools/phalcon.php /usr/local/bin/phalcon \
+    && chmod +x /usr/local/bin/phalcon
 
 RUN /usr/sbin/a2dismod 'mpm_*' && /usr/sbin/a2enmod mpm_prefork
 RUN /usr/sbin/a2enmod rewrite
