@@ -48,7 +48,7 @@ RUN /usr/sbin/a2dismod 'mpm_*' && /usr/sbin/a2enmod mpm_prefork
 RUN /usr/sbin/a2enmod rewrite
 ADD 000-phalcon.conf /etc/apache2/sites-available/
 ADD 001-phalcon-ssl.conf /etc/apache2/sites-available/
-ADD webtools /tmp/
+ADD webtools /tmp/webtools/
 
 RUN /usr/sbin/a2dissite '*' && /usr/sbin/a2ensite 000-phalcon 001-phalcon-ssl
 RUN a2enmod expires
