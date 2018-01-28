@@ -28,7 +28,7 @@
  *          192.168.0.1 or SUBNET 192., 10.0.2., 86.84.124.
  */
 defined('PTOOLS_IP') || define('PTOOLS_IP', '172.');
-defined('BASE_PATH') || define('BASE_PATH', dirname(dirname(__FILE__)));
+defined('BASE_PATH') || define('BASE_PATH', '/var/www/phalcon');
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . DIRECTORY_SEPARATOR . 'app');
 
 /**
@@ -54,11 +54,11 @@ defined('ENV_TESTING') || define('ENV_TESTING', 'testing');
 /**
  * @const APPLICATION_ENV Current application stage.
  */
-defined('APPLICATION_ENV') || define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?: ENV_DEVELOPMENT);
+defined('APPLICATION_ENV') || define('APPLICATION_ENV', getenv('APPLICATION_ENV') ? : ENV_DEVELOPMENT);
 
 // ---------------------------- DO NOT EDIT BELOW ------------------------------
 
 /**
  * @const PTOOLSPATH The path to the Phalcon Developers Tools.
  */
-defined('PTOOLSPATH') || define('PTOOLSPATH', '@@PATH@@');
+defined('PTOOLSPATH') || define('PTOOLSPATH', '/tmp/phalcon-devtools/');
