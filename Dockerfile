@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER vannk <vansunny12@gmail.com>
 
+
 # Install apache, php, etc...
 RUN apt-get update && \
     apt-get install -y \
