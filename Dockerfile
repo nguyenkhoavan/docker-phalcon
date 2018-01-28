@@ -42,14 +42,14 @@ RUN git clone http://github.com/phalcon/phalcon-devtools.git \
     && cd phalcon-devtools/ \
     && ./phalcon.sh \
     && ln -s /tmp/phalcon-devtools/phalcon.php /usr/local/bin/phalcon \
-    && chmod +x /usr/local/bin/phalcon \
-
-ADD webtools /tmp/webtools
+    && chmod +x /usr/local/bin/phalcon
 
 RUN /usr/sbin/a2dismod 'mpm_*' && /usr/sbin/a2enmod mpm_prefork
 RUN /usr/sbin/a2enmod rewrite
 ADD 000-phalcon.conf /etc/apache2/sites-available/
 ADD 001-phalcon-ssl.conf /etc/apache2/sites-available/
+ADD webtools /tmp/
+
 RUN /usr/sbin/a2dissite '*' && /usr/sbin/a2ensite 000-phalcon 001-phalcon-ssl
 RUN a2enmod expires
 RUN a2enmod headers
