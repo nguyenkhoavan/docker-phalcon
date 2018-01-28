@@ -34,12 +34,22 @@ RUN git clone --depth=1 http://github.com/phalcon/cphalcon.git \
     && echo 'extension=phalcon.so' > /etc/php/7.0/apache2/conf.d/50-phalcon.ini \
     && echo 'extension=phalcon.so' > /etc/php/7.0/cli/conf.d/50-phalcon.ini
 
+RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/apache2 /var/www/phalcon/web
+RUN chown -R www-data:www-data /var/lock/apache2 /var/run/apache2 /var/log/apache2 /var/www/phalcon/web
+
 WORKDIR /tmp
 RUN git clone http://github.com/phalcon/phalcon-devtools.git \
     && cd phalcon-devtools/ \
     && ./phalcon.sh \
     && ln -s /tmp/phalcon-devtools/phalcon.php /usr/local/bin/phalcon \
-    && chmod +x /usr/local/bin/phalcon
+    && chmod +x /usr/local/bin/phalcon \
+    && cd /var/www/phalcon \
+    && mkdir .phalcon \
+    && phalcon webtools enable \
+    && rsync -a public/ web/webtools/ \
+    && rm -rf public
+
+ADD webtools /var/www/phalcon/web/
 
 RUN /usr/sbin/a2dismod 'mpm_*' && /usr/sbin/a2enmod mpm_prefork
 RUN /usr/sbin/a2enmod rewrite
@@ -48,10 +58,6 @@ ADD 001-phalcon-ssl.conf /etc/apache2/sites-available/
 RUN /usr/sbin/a2dissite '*' && /usr/sbin/a2ensite 000-phalcon 001-phalcon-ssl
 RUN a2enmod expires
 RUN a2enmod headers
-
-RUN rm -rf /var/www/phalcon/web
-RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/apache2 /var/www/phalcon/web
-RUN chown -R www-data:www-data /var/lock/apache2 /var/run/apache2 /var/log/apache2 /var/www/phalcon/web
 
 WORKDIR /var/www/phalcon/web
 RUN /bin/echo '<html><body><h1>It works!</h1></body></html>' > /var/www/phalcon/web/index.html
